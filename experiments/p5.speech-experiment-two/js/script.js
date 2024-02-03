@@ -8,10 +8,8 @@ author, and this description to match your project!
 
 "use strict";
 
-const speechSynthesizer = new p5.Speech();
-
-let showSubtitle = false;
-let toSay = `I'm going to find you!`;
+const speechRecognizer = new p5.SpeechRec();
+let currentSpeech = `?`;
 
 function preload() {
 }
@@ -19,35 +17,18 @@ function preload() {
 function setup() {
     createCanvas(500, 500);
 
-    // Synthesis settings
-    speechSynthesizer.setPitch(0.2);
-    speechSynthesizer.setRate(0.5);
-    speechSynthesizer.setVoice(`Google UK English Male`)
-
-    speechSynthesizer.onStart = speechStarted;
-    speechSynthesizer.onEnd = speechEnded;
-
-    console.log(speechSynthesizer.listVoices());
+    speechRecognizer.onResult = handleSpeechInput;
+    speechRecognizer.Start();
 }
 
 function draw() {
     background(200, 50, 50);
 
-    if (showSubtitle) {
-        textSize(36);
-        text(toSay, 50, 150);
-    }
+    textAlign(CENTER, CENTER);
+    textSize(30)
+    text(currentSpeech, width / 2, height / 2);
 }
 
-function mousePressed() {
-    // say something!
-    speechSynthesizer.speak(toSay)
-}
-
-function speechStarted() {
-    showSubtitle = true;
-}
-
-function speechEnded() {
-    showSubtitle = false;
+function handleSpeechInput() {
+    currentSpeech = speechRecognizer.resultString;
 }
