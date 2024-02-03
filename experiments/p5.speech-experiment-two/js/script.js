@@ -9,26 +9,30 @@ author, and this description to match your project!
 "use strict";
 
 const speechRecognizer = new p5.SpeechRec();
-let currentSpeech = `?`;
+let backgroundColor = `black`;
 
 function preload() {
 }
 
 function setup() {
-    createCanvas(500, 500);
+    createCanvas(550, 550);
 
     speechRecognizer.onResult = handleSpeechInput;
-    speechRecognizer.Start();
+    speechRecognizer.continuous = true;
+    speechRecognizer.interimResults = true;
+    speechRecognizer.start();
 }
 
 function draw() {
-    background(200, 50, 50);
+    background(backgroundColor);
+    // textAlign(CENTER, CENTER);
+    // textSize(30)
+    // text(`Say turn the lights lights on or off`, width / 2, height / 3);
 
-    textAlign(CENTER, CENTER);
-    textSize(30)
-    text(currentSpeech, width / 2, height / 2);
+    // text(currentSpeech, width / 2, height / 2);
 }
 
 function handleSpeechInput() {
-    currentSpeech = speechRecognizer.resultString;
+    backgroundColor = speechRecognizer.resultString;
+
 }
