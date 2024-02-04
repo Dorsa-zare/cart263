@@ -2,10 +2,11 @@
 
 const speechRecognizer = new p5.SpeechRec();
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Title"; // Initial state
+let currentState = "Game"; // Initial state
 
 let catImage; // Declare a variable to hold the cat image
 let foodImage; // Declare a variable to hold the food image
+let happyCatImage; // Declare a variable to hold the happy cat image
 let catY; // Declare the variable for the cat's y-coordinate
 let catX; // Declare the variable for the cat's x-coordinate
 
@@ -91,6 +92,8 @@ function moveCatImage(yOffset, xOffset) {
 
 function displayEnding() {
     // Ending logic and display 
+    // Display the happy cat image 
+    image(happyCatImage, width / 2 - 300, height / 2 - 170, 500, 500);
 }
 
 function handleSpeechInput() {
