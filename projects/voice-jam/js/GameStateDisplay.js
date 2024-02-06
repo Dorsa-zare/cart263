@@ -4,15 +4,16 @@ class GameStateDisplay {
         this.foodImage = foodImage;
         this.catX = catX;
         this.catY = catY;
+        this.catSize = 70;
         this.moveAmount = moveAmount;
-
+        this.hit = false;
 
         // Array to store maze lines
         this.mazeLines = [
             { startX: 170, startY: 100, endX: 550, endY: 100 }, //Top frame
             { startX: 120, startY: 500, endX: 520, endY: 500 }, //Buttom frame
             { startX: 550, startY: 100, endX: 550, endY: 400 }, //Right frame
-            { startX: 120, startY: 500, endX: 120, endY: 170 }, //Left frame
+            { startX: 120, startY: 170, endX: 120, endY: 500 }, //Left frame
 
 
             { startX: 400, startY: 440, endX: 400, endY: 500 }, //Buttom lines
@@ -24,7 +25,7 @@ class GameStateDisplay {
 
             { startX: 470, startY: 280, endX: 550, endY: 280 }, //Right lines
             { startX: 470, startY: 280, endX: 470, endY: 350 }, //Right lines
-            { startX: 410, startY: 350, endX: 470, endY: 350 }, //Buttom lines
+            { startX: 410, startY: 350, endX: 470, endY: 350 }, //right lines
 
             { startX: 330, startY: 180, endX: 330, endY: 430 }, //Middle lines
             { startX: 330, startY: 180, endX: 400, endY: 180 }, //Middle lines
@@ -49,7 +50,7 @@ class GameStateDisplay {
         image(this.foodImage, width / 2 - 270, height / 2 - 220, 120, 120);
 
         // Display the cat image at the updated position
-        image(this.catImage, this.catX, this.catY, 70, 70);
+        image(this.catImage, this.catX, this.catY, this.catSize, this.catSize);
 
         // Draw maze lines
         stroke(0); // Set stroke color to black
@@ -77,11 +78,14 @@ class GameStateDisplay {
 
             console.log('New cat position:', newCatX, newCatY);
 
-            if (this.checkCollisionWithMaze(newCatX, newCatY)) {
-                console.log('Collision detected!');
-                newCatY = this.catY;
-                newCatX = this.catX;
-                break;
+            for (let i = 0; i > this.mazeLines.length; i++) {
+                this.hit = collideLineRect(this.mazeLines[i].startX, this.mazeLines[i].startY, this.mazeLines[i].endX, this.mazeLines[i].endY, this.catX, this.catY, this.catSize, this.catSize);
+                if (this.hit) {
+                    this.moveAmount = -this.moveAmount;
+
+                }
+                stroke(this.hit ? color('red') : 0);
+                console.log('check hit' + this.hit);
             }
         }
 
@@ -89,42 +93,6 @@ class GameStateDisplay {
         this.catX = constrain(newCatX, 0, width - 90);
 
         console.log('Ending moveCatImage');
-    }
-
-    checkCollisionWithMaze(x, y) {
-        const catBoundingBox = {
-            top: y,
-            bottom: y + 70,
-            left: x,
-            right: x + 70,
-        };
-    
-        console.log('Checking collision for cat:', catBoundingBox);
-    
-        for (let i = 0; i < this.mazeLines.length; i++) {
-            const currentLine = this.mazeLines[i];
-            console.log('Checking collision with maze line:', currentLine);
-    
-            if (this.intersect(catBoundingBox, currentLine)) {
-                console.log('Collision detected!');
-                return true;
-            }
-        }
-    
-        return false;
-    }
-    
-
-    intersect(rect1, rect2) {
-        console.log('Checking intersection between:', rect1, 'and', rect2);
-        const intersection = (
-            rect1.left < rect2.right &&
-            rect1.right > rect2.left &&
-            rect1.top < rect2.bottom &&
-            rect1.bottom > rect2.top
-        );
-        console.log('Intersection result:', intersection);
-        return intersection;
     }
 
 
@@ -142,4 +110,15 @@ class GameStateDisplay {
             this.moveCatImage(0, -this.moveAmount); // Move left by the set amount
         }
     }
+
+    // overlap(x1, y1, x2, y2) {
+    //     if (x1===x2) {
+    //         if (this.catX > x1 + 1 && this.catY + this.catSize > y1 && this.catY < y2 ) {
+    //             this.moveAmount = -this.moveAmount;
+    //         }
+    //     }
+    // }
+
+
+
 }

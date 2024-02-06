@@ -2,7 +2,7 @@
 
 const speechRecognizer = new p5.SpeechRec();
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Title"; // Initial state
+let currentState = "Game"; // Initial state
 
 let titleImage;
 let catImage; // Declare a variable to hold the cat image
@@ -66,7 +66,7 @@ function displayTitle() {
     // Instructions of the game
     textSize(16);
     text(`Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`, width / 2, height / 2 - 60);
-    text("Say 'start' when you're ready!", width / 2, height / 2 + 200);
+    text("Say 'meow' when you're ready!", width / 2, height / 2 + 200);
 
     // Display the cat image 
     image(catImage, width / 2 + 100, height / 2 - 50, 200, 200);
@@ -76,7 +76,7 @@ function displayTitle() {
     image(mazeImage, width / 2 - 80, height / 2 - 20, 150, 150);
 
     // Check if the user said 'start' to transition to the next state
-    if (currentSpeech.toLowerCase().includes("start")) {
+    if (currentSpeech.toLowerCase().includes("meow")) {
         currentState = "Game";
     }
 }
