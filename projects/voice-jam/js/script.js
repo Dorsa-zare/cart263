@@ -2,10 +2,12 @@
 
 const speechRecognizer = new p5.SpeechRec();
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Game"; // Initial state
+let currentState = "Title"; // Initial state
 
+let titleImage;
 let catImage; // Declare a variable to hold the cat image
 let foodImage; // Declare a variable to hold the food image
+let mazeImage; // Declare a variable to hold the maze image
 let happyCatImage; // Declare a variable to hold the happy cat image
 let catY; // Declare the variable for the cat's y-coordinate
 let catX; // Declare the variable for the cat's x-coordinate
@@ -15,12 +17,16 @@ let gameStateDisplay;
 
 
 function preload() {
+    // Load the title image 
+    titleImage = loadImage('assets/images/title.png');
     // Load the cat image 
     catImage = loadImage('assets/images/cat.png');
     // Load the cat food image 
     foodImage = loadImage('assets/images/catfood.png');
-    // Load the cat food image 
+    // Load the happy cat image for ending
     happyCatImage = loadImage('assets/images/happycat.png');
+    // Load the maze image 
+    mazeImage = loadImage('assets/images/maze.png');
 }
 
 
@@ -54,19 +60,20 @@ function draw() {
 }
 
 function displayTitle() {
-    // Title of the game
-    textSize(36);
-    text(`Help the cat find her food!`, width / 2, height / 2 - 200);
+    // Display the title of the game  
+    image(titleImage, width / 2 - 250, height / 2 - 300, 500, 250);
 
     // Instructions of the game
     textSize(16);
-    text(`Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide the cat in the right direction.`, width / 2, height / 2 - 110);
+    text(`Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`, width / 2, height / 2 - 60);
     text("Say 'start' when you're ready!", width / 2, height / 2 + 200);
 
     // Display the cat image 
     image(catImage, width / 2 + 100, height / 2 - 50, 200, 200);
     // Display the cat food image 
-    image(foodImage, width / 2 - 270, height / 2, 200, 200);
+    image(foodImage, width / 2 - 270, height / 2 - 30, 200, 200);
+    // Display the maze image 
+    image(mazeImage, width / 2 - 80, height / 2 - 20, 150, 150);
 
     // Check if the user said 'start' to transition to the next state
     if (currentSpeech.toLowerCase().includes("start")) {
