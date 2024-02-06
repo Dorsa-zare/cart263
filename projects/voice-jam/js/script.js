@@ -10,7 +10,7 @@ let happyCatImage; // Declare a variable to hold the happy cat image
 let catY; // Declare the variable for the cat's y-coordinate
 let catX; // Declare the variable for the cat's x-coordinate
 
-let moveAmount = 20; // Set the initial movement amount
+let moveAmount = 10; // Set the initial movement amount
 let gameStateDisplay;
 
 
@@ -79,16 +79,6 @@ function displayGame() {
     gameStateDisplay.display();
 }
 
-
-function moveCatImage(yOffset, xOffset) {
-    // Adjust the y-coordinate and x-coordinate of the cat image
-    catY += yOffset;
-    catX += xOffset;
-
-    // Ensure the cat stays within the canvas bounds
-    catY = constrain(catY, 0, height - 90);
-    catX = constrain(catX, 0, width - 90);
-}
 
 function displayEnding() {
     // Ending logic and display 

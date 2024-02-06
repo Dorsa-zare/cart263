@@ -51,29 +51,80 @@ class GameStateDisplay {
         // Display the cat image at the updated position
         image(this.catImage, this.catX, this.catY, 70, 70);
 
-
         // Draw maze lines
         stroke(0); // Set stroke color to black
         for (let i = 0; i < this.mazeLines.length; i++) {
             let currentLine = this.mazeLines[i];
-            strokeWeight(3);
+            strokeWeight(4);
             line(currentLine.startX, currentLine.startY, currentLine.endX, currentLine.endY);
         }
-
         // Reset stroke weight to default for text
         strokeWeight(0.5);
-
     }
 
 
     moveCatImage(yOffset, xOffset) {
-        // Adjust the y-coordinate and x-coordinate of the cat image
-        this.catY += yOffset;
-        this.catX += xOffset;
+        const numSteps = 10;
+        let newCatY = this.catY;
+        let newCatX = this.catX;
 
-        // Ensure the cat stays within the canvas bounds
-        this.catY = constrain(this.catY, 0, height - 90);
-        this.catX = constrain(this.catX, 0, width - 90);
+        console.log('Starting moveCatImage');
+
+        for (let step = 0; step < numSteps; step++) {
+            const fraction = step / numSteps;
+            newCatY = this.catY + yOffset * fraction;
+            newCatX = this.catX + xOffset * fraction;
+
+            console.log('New cat position:', newCatX, newCatY);
+
+            if (this.checkCollisionWithMaze(newCatX, newCatY)) {
+                console.log('Collision detected!');
+                newCatY = this.catY;
+                newCatX = this.catX;
+                break;
+            }
+        }
+
+        this.catY = constrain(newCatY, 0, height - 90);
+        this.catX = constrain(newCatX, 0, width - 90);
+
+        console.log('Ending moveCatImage');
+    }
+
+    checkCollisionWithMaze(x, y) {
+        const catBoundingBox = {
+            top: y,
+            bottom: y + 70,
+            left: x,
+            right: x + 70,
+        };
+    
+        console.log('Checking collision for cat:', catBoundingBox);
+    
+        for (let i = 0; i < this.mazeLines.length; i++) {
+            const currentLine = this.mazeLines[i];
+            console.log('Checking collision with maze line:', currentLine);
+    
+            if (this.intersect(catBoundingBox, currentLine)) {
+                console.log('Collision detected!');
+                return true;
+            }
+        }
+    
+        return false;
+    }
+    
+
+    intersect(rect1, rect2) {
+        console.log('Checking intersection between:', rect1, 'and', rect2);
+        const intersection = (
+            rect1.left < rect2.right &&
+            rect1.right > rect2.left &&
+            rect1.top < rect2.bottom &&
+            rect1.bottom > rect2.top
+        );
+        console.log('Intersection result:', intersection);
+        return intersection;
     }
 
 
