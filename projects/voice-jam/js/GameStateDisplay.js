@@ -8,13 +8,13 @@ class GameStateDisplay {
         this.moveAmount = moveAmount;
         this.hit = false;
 
+
         // Array to store maze lines
         this.mazeLines = [
             { startX: 170, startY: 100, endX: 550, endY: 100 }, //Top frame
             { startX: 120, startY: 500, endX: 520, endY: 500 }, //Buttom frame
             { startX: 550, startY: 100, endX: 550, endY: 400 }, //Right frame
             { startX: 120, startY: 170, endX: 120, endY: 500 }, //Left frame
-
 
             { startX: 400, startY: 440, endX: 400, endY: 500 }, //Buttom lines
             { startX: 400, startY: 440, endX: 460, endY: 440 }, //Buttom lines
@@ -78,21 +78,18 @@ class GameStateDisplay {
 
             console.log('New cat position:', newCatX, newCatY);
 
-            for (let i = 0; i > this.mazeLines.length; i++) {
+            for (let i = 0; i < this.mazeLines.length; i++) {
                 this.hit = collideLineRect(this.mazeLines[i].startX, this.mazeLines[i].startY, this.mazeLines[i].endX, this.mazeLines[i].endY, this.catX, this.catY, this.catSize, this.catSize);
                 if (this.hit) {
-                    this.moveAmount = -this.moveAmount;
+                    this.moveAmount = 0;
 
                 }
-                stroke(this.hit ? color('red') : 0);
-                console.log('check hit' + this.hit);
+
             }
         }
 
         this.catY = constrain(newCatY, 0, height - 90);
         this.catX = constrain(newCatX, 0, width - 90);
-
-        console.log('Ending moveCatImage');
     }
 
 
@@ -110,15 +107,5 @@ class GameStateDisplay {
             this.moveCatImage(0, -this.moveAmount); // Move left by the set amount
         }
     }
-
-    // overlap(x1, y1, x2, y2) {
-    //     if (x1===x2) {
-    //         if (this.catX > x1 + 1 && this.catY + this.catSize > y1 && this.catY < y2 ) {
-    //             this.moveAmount = -this.moveAmount;
-    //         }
-    //     }
-    // }
-
-
 
 }
