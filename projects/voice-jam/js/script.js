@@ -1,8 +1,10 @@
 "use strict";
 
 const speechRecognizer = new p5.SpeechRec();
+let voice = new p5.Speech()
+
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Game"; // Initial state
+let currentState = "Title"; // Initial state
 
 let titleImage;
 let catImage; // Declare a variable to hold the cat image
@@ -12,8 +14,9 @@ let happyCatImage; // Declare a variable to hold the happy cat image
 let catY; // Declare the variable for the cat's y-coordinate
 let catX; // Declare the variable for the cat's x-coordinate
 
-let moveAmount = 10; // Set the initial movement amount
-let gameStateDisplay;
+let moveAmount = 20; // Set the initial movement amount
+let game;
+let cat;
 
 
 function preload() {
@@ -36,7 +39,9 @@ function setup() {
     catX = width / 2 + 200; // Initialize the cat's x-coordinate
 
     // Create an instance of the GameStateDisplay class
-    gameStateDisplay = new GameStateDisplay(catImage, foodImage, catX, catY, moveAmount);
+    game = new GameStateDisplay(foodImage);
+    cat = new Cat(catX, catY, moveAmount, catImage);
+
 
     speechRecognizer.onResult = handleSpeechInput;
     speechRecognizer.continuous = true;
@@ -63,6 +68,8 @@ function displayTitle() {
     // Display the title of the game  
     image(titleImage, width / 2 - 250, height / 2 - 300, 500, 250);
 
+    voice.speak(`Help Misoo find her food`);
+
     // Instructions of the game
     textSize(16);
     text(`Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`, width / 2, height / 2 - 60);
@@ -83,7 +90,7 @@ function displayTitle() {
 
 function displayGame() {
     // Game logic and display using the GameStateDisplay class
-    gameStateDisplay.display();
+    game.display();
 }
 
 
@@ -99,7 +106,7 @@ function handleSpeechInput() {
         // Save the speech input to a variable
         currentSpeech = speechRecognizer.resultString;
     } else if (currentState === "Game") {
-        gameStateDisplay.handleDirections(speechRecognizer.resultString);
+        cat.handleDirections(speechRecognizer.resultString);
     } else if (currentState === "Ending") {
     }
 }
