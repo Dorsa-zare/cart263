@@ -25,11 +25,11 @@ function setup() {
 
 function draw() {
     background(backgroundColor);
-    // textAlign(CENTER, CENTER);
-    // textSize(30)
-    // text(`Say turn the lights lights on or off`, width / 2, height / 3);
+    textAlign(CENTER, CENTER);
+    textSize(30)
+    text(`Say turn the lights lights on or off`, width / 2, height / 3);
 
-    // text(currentSpeech, width / 2, height / 2);
+    text(currentSpeech, width / 2, height / 2);
 }
 
 function handleSpeechInput() {

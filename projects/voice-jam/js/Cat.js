@@ -14,30 +14,24 @@ class Cat {
         image(this.catImage, this.catX, this.catY, this.catSize, this.catSize);
     }
 
+    
     moveCatImage(yOffset, xOffset) {
-        const numSteps = 10;
-        let newCatY = this.catY;
-        let newCatX = this.catX;
-
-        for (let step = 0; step < numSteps; step++) {
-            const fraction = step / numSteps;
-            newCatY = this.catY + yOffset * fraction;
-            newCatX = this.catX + xOffset * fraction;
-
-            console.log('New cat position:', newCatX, newCatY);
-
-            for (let i = 0; i < game.mazeLines.length; i++) {
-                this.hit = collideLineRect(game.mazeLines[i].startX, game.mazeLines[i].startY, game.mazeLines[i].endX, game.mazeLines[i].endY, this.catX, this.catY, this.catSize, this.catSize);
-                if (this.hit) {
-                    this.moveAmount = 0;
-                }
-            }
+  
+        let blocked = false;
+        for (let i = 0; i < game.mazeLines.length; i++) {
+          let line = game.mazeLines[i];
+          const hit = collideLineRect(line.startX, line.startY, line.endX, line.endY, this.catX + xOffset, this.catY + yOffset, this.catSize, this.catSize);
+          if (hit) {
+            blocked = true;
+            break;
+          }
         }
-
-        this.catY = constrain(newCatY, 0, height - 90);
-        this.catX = constrain(newCatX, 0, width - 90);
-    }
-
+        
+        if (!blocked) {
+          this.catX += xOffset;
+          this.catY += yOffset;
+        }
+      }
 
     handleDirections(direction) {
         // Check if the user said 'up', 'down', 'left', or 'right' to move the cat image

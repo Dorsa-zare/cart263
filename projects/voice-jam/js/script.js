@@ -4,7 +4,7 @@ const speechRecognizer = new p5.SpeechRec();
 let voice = new p5.Speech()
 
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Title"; // Initial state
+let currentState = "Game"; // Initial state
 
 let titleImage;
 let catImage; // Declare a variable to hold the cat image
@@ -68,7 +68,7 @@ function displayTitle() {
     // Display the title of the game  
     image(titleImage, width / 2 - 250, height / 2 - 300, 500, 250);
 
-    voice.speak(`Help Misoo find her food`);
+    // voice.speak(`Help Misoo find her food`);
 
     // Instructions of the game
     textSize(16);
@@ -95,7 +95,6 @@ function displayGame() {
 
 
 function displayEnding() {
-    // Ending logic and display 
     // Display the happy cat image 
     image(happyCatImage, width / 2 - 300, height / 2 - 170, 500, 500);
 }

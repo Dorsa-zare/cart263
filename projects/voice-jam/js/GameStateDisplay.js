@@ -19,7 +19,7 @@ class GameStateDisplay {
 
             { startX: 470, startY: 280, endX: 550, endY: 280 }, //Right lines
             { startX: 470, startY: 280, endX: 470, endY: 350 }, //Right lines
-            { startX: 410, startY: 350, endX: 470, endY: 350 }, //right lines
+            { startX: 410, startY: 350, endX: 470, endY: 350 }, //Right lines
 
             { startX: 330, startY: 180, endX: 330, endY: 430 }, //Middle lines
             { startX: 330, startY: 180, endX: 400, endY: 180 }, //Middle lines
