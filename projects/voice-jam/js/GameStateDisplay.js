@@ -5,45 +5,53 @@ class GameStateDisplay {
 
         // Array to store maze lines
         this.mazeLines = [
-            { startX: 170, startY: 100, endX: 550, endY: 100 }, //Top frame
-            { startX: 120, startY: 500, endX: 520, endY: 500 }, //Buttom frame
-            { startX: 550, startY: 100, endX: 550, endY: 400 }, //Right frame
-            { startX: 120, startY: 170, endX: 120, endY: 500 }, //Left frame
+            { startX: 185, startY: 100, endX: 560, endY: 100 }, //Top frame
+            { startX: 90, startY: 515, endX: 520, endY: 515 }, //Buttom frame
+            { startX: 560, startY: 100, endX: 560, endY: 390 }, //Right frame
+            { startX: 90, startY: 175, endX: 90, endY: 515 }, //Left frame
 
-            { startX: 400, startY: 440, endX: 400, endY: 500 }, //Buttom lines
-            { startX: 400, startY: 440, endX: 460, endY: 440 }, //Buttom lines
+            { startX: 400, startY: 450, endX: 400, endY: 515 }, //Buttom lines
+            { startX: 400, startY: 450, endX: 450, endY: 450 }, //Buttom lines
 
-            { startX: 260, startY: 400, endX: 260, endY: 500 }, //Buttom lines
+            { startX: 260, startY: 400, endX: 260, endY: 515 }, //Buttom lines
             { startX: 190, startY: 400, endX: 258, endY: 400 }, //Buttom lines
             { startX: 190, startY: 400, endX: 190, endY: 450 }, //Buttom lines
 
-            { startX: 470, startY: 280, endX: 550, endY: 280 }, //Right lines
-            { startX: 470, startY: 280, endX: 470, endY: 350 }, //Right lines
-            { startX: 410, startY: 350, endX: 470, endY: 350 }, //Right lines
+            { startX: 480, startY: 280, endX: 560, endY: 280 }, //Right lines
+            { startX: 480, startY: 280, endX: 480, endY: 350 }, //Right lines
+            { startX: 420, startY: 350, endX: 480, endY: 350 }, //Right lines
 
-            { startX: 330, startY: 180, endX: 330, endY: 430 }, //Middle lines
-            { startX: 330, startY: 180, endX: 400, endY: 180 }, //Middle lines
-            { startX: 400, startY: 180, endX: 400, endY: 270 }, //Middle lines
+            { startX: 330, startY: 200, endX: 330, endY: 430 }, //Middle lines
+            { startX: 330, startY: 200, endX: 390, endY: 200 }, //Middle lines
+            { startX: 390, startY: 200, endX: 390, endY: 250 }, //Middle lines
 
-            { startX: 260, startY: 100, endX: 260, endY: 270 }, //Top lines
-            { startX: 470, startY: 100, endX: 470, endY: 200 }, //Top lines
+            { startX: 250, startY: 100, endX: 250, endY: 240 }, //Top lines
+            { startX: 490, startY: 100, endX: 490, endY: 170 }, //Top lines
 
-            { startX: 120, startY: 220, endX: 180, endY: 220 }, //Left lines
-            { startX: 180, startY: 220, endX: 180, endY: 330 }, //Left lines
-            { startX: 180, startY: 330, endX: 330, endY: 330 }, //Left lines
+            { startX: 90, startY: 230, endX: 160, endY: 230 }, //Left lines
+            { startX: 160, startY: 230, endX: 160, endY: 330 }, //Left lines
+            { startX: 160, startY: 330, endX: 330, endY: 330 }, //Left lines
         ];
     }
 
 
     display() {
         textSize(20);
-        text(`Help the cat find her food!`, width / 2, height / 2 - 220);
+        text(`Help Misoo find her food!`, width / 2, height / 2 - 220);
 
         // Display the cat food image 
         image(this.foodImage, width / 2 - 270, height / 2 - 220, 120, 120);
 
         // Display cat
         cat.display();
+
+        // Calculate the distance between the center of the cat and the center of the food image
+        let distance = dist(cat.catX + cat.catSize / 2, cat.catY + cat.catSize / 2, width / 2 - 150, height / 2 - 160);
+
+        // Check if the distance is less than a certain threshold
+        if (distance < 40) {
+            currentState = "Ending"; // Transition to the ending state
+        }
 
         // Draw maze lines
         stroke(0); // Set stroke color to black
@@ -53,7 +61,12 @@ class GameStateDisplay {
             line(currentLine.startX, currentLine.startY, currentLine.endX, currentLine.endY);
         }
         // Reset stroke weight to default for text
-        strokeWeight(0.5);
+        strokeWeight(0.3);
+
+        // Draw the door rectangle
+        fill(142, 72, 25); // Brown color
+        rect(width / 2 + 74, height / 2 - 90, 90, 17);
+
     }
 
 }
