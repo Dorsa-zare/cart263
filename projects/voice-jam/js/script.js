@@ -4,7 +4,8 @@ const speechRecognizer = new p5.SpeechRec();
 let voice = new p5.Speech()
 
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Game"; // Initial state
+let currentState = "Title"; // Initial state
+let voiceSpeaking = false;
 
 let titleImage;
 let catImage; // Declare a variable to hold the cat image
@@ -68,12 +69,15 @@ function displayTitle() {
     // Display the title of the game  
     image(titleImage, width / 2 - 250, height / 2 - 300, 500, 250);
 
-    // voice.speak(`Help Misoo find her food`);
-
     // Instructions of the game
-    textSize(16);
-    text(`Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`, width / 2, height / 2 - 60);
-    text("Say 'meow' when you're ready!", width / 2, height / 2 + 200);
+    textSize(20);
+    if (!voiceSpeaking) {
+        text("Press mouse to start", width / 2, height / 2 - 60);
+    } else {
+        textSize(16); // Adjusted the text size for instructions
+        text(`Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`, width / 2, height / 2 - 60);
+        text("Say 'meow' when you're ready!", width / 2, height / 2 + 200);
+    }
 
     // Display the cat image 
     image(catImage, width / 2 + 100, height / 2 - 50, 200, 200);
@@ -107,5 +111,14 @@ function handleSpeechInput() {
     } else if (currentState === "Game") {
         cat.handleDirections(speechRecognizer.resultString);
     } else if (currentState === "Ending") {
+    }
+}
+
+function mousePressed() {
+    if (!voiceSpeaking && currentState === "Title") {
+        voice.speak(`Help Misoo find her food. Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`);
+        voiceSpeaking = true;
+
+
     }
 }
