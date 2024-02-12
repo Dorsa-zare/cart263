@@ -109,7 +109,7 @@ function displayEnding() {
 
     // Speak the ending message only if it hasn't been spoken before
     if (!voiceSpeaking) {
-        voice.setVoice("Google italiano");
+        voice.setVoice("Microsoft Linda - English (Canada)");
         voice.speak("Yay! Misoo is happy!");
         voiceSpeaking = true;
     }
