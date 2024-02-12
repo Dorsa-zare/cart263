@@ -7,6 +7,7 @@ class Cat {
         this.catImage = catImage;
         this.direction = 'up';
         this.hit = false;
+
     }
 
     display() {
@@ -14,41 +15,29 @@ class Cat {
         image(this.catImage, this.catX, this.catY, this.catSize, this.catSize);
     }
 
-    
+
     moveCatImage(yOffset, xOffset) {
-  
-        let blocked = false;
-        for (let i = 0; i < game.mazeLines.length; i++) {
-          let line = game.mazeLines[i];
-          const hit = collideLineRect(line.startX, line.startY, line.endX, line.endY, this.catX + xOffset, this.catY + yOffset, this.catSize, this.catSize);
-          if (hit) {
-            blocked = true;
-            break;
-          }
-        }
-        
-        if (!blocked) {
-          this.catX += xOffset;
-          this.catY += yOffset;
-        }
-      }
+        // Calculate the new position after movement
+        let newX = this.catX + xOffset;
+        let newY = this.catY + yOffset;
 
-    handleDirections(direction) {
-        // Check if the user said 'up', 'down', 'left', or 'right' to move the cat image
-        console.log(direction.toLowerCase());
-
-        if (direction.toLowerCase().includes("up")) {
-            this.moveCatImage(this.moveAmount, 0); // Move down by the set amount
-            this.direction = 'down';
-        } else if (direction.toLowerCase().includes("down")) {
-            this.moveCatImage(-this.moveAmount, 0); // Move up by the set amount
-            this.direction = 'up';
-        } else if (direction.toLowerCase().includes("left")) {
-            this.moveCatImage(0, this.moveAmount); // Move right by the set amount
-            this.direction = 'right';
-        } else if (direction.toLowerCase().includes("right")) {
-            this.moveCatImage(0, -this.moveAmount); // Move left by the set amount
-            this.direction = 'left';
+        // Check if the new position is within the canvas boundaries
+        if (newX >= 0 && newX <= 650 - this.catSize && newY >= 0 && newY <= 550 - this.catSize) {
+            // Check for collision with maze lines
+            let blocked = false;
+            for (let i = 0; i < game.mazeLines.length; i++) {
+                let line = game.mazeLines[i];
+                const hit = collideLineRect(line.startX, line.startY, line.endX, line.endY, newX, newY, this.catSize, this.catSize);
+                if (hit) {
+                    blocked = true;
+                    break;
+                }
+            }
+            // If not blocked by maze lines, update the cat's position
+            if (!blocked) {
+                this.catX = newX;
+                this.catY = newY;
+            }
         }
     }
 }

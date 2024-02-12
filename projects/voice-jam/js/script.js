@@ -128,7 +128,7 @@ function handleSpeechInput() {
         // Save the speech input to a variable
         currentSpeech = speechRecognizer.resultString;
     } else if (currentState === "Game") {
-        cat.handleDirections(speechRecognizer.resultString);
+        game.handleDirections(speechRecognizer.resultString); // Change this line
     } else if (currentState === "Ending") {
     }
 }
