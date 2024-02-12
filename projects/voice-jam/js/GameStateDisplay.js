@@ -1,6 +1,8 @@
 class GameStateDisplay {
     constructor(foodImage) {
         this.foodImage = foodImage;
+        // Variable to store whether the cat can move
+        this.canMove = true;
 
         // Array to store information about each door
         this.doors = [
@@ -112,36 +114,46 @@ class GameStateDisplay {
             fill(0);
             textAlign(CENTER);
             text("Say 'open the door'", width / 2, height / 2 - 195);
+            this.canMove = false; // Prevent the cat from moving
+        } else {
+            this.canMove = true; // Allow the cat to move if not close to a closed door
         }
     }
 
-
     handleDirections(direction) {
-        // move the cat based on the user's input
-        console.log(direction.toLowerCase());
-
-        if (direction.toLowerCase().includes("up")) {
-            cat.moveCatImage(cat.moveAmount, 0); // Move down by the set amount
-            cat.direction = 'down';
-        } else if (direction.toLowerCase().includes("down")) {
-            cat.moveCatImage(-cat.moveAmount, 0); // Move up by the set amount
-            cat.direction = 'up';
-        } else if (direction.toLowerCase().includes("left")) {
-            cat.moveCatImage(0, cat.moveAmount); // Move right by the set amount
-            cat.direction = 'right';
-        } else if (direction.toLowerCase().includes("right")) {
-            cat.moveCatImage(0, -cat.moveAmount); // Move left by the set amount
-            cat.direction = 'left';
-        } else if (direction.toLowerCase().includes("open the door")) {
-            // Iterate through the doors to find the one next to the cat
+        if (direction.toLowerCase().includes("open the door")) {
+            // Open the door if the cat is close enough
             for (let i = 0; i < this.doors.length; i++) {
                 let door = this.doors[i];
-                if (!door.isOpen && dist(cat.catX, cat.catY, door.x, door.y) < 40) {
-                    // Open the door
+                if (!door.isOpen && dist(cat.catX, cat.catY, door.x, door.y) < 50) {
                     door.isOpen = true;
+                    this.canMove = true; // Allow the cat to move after opening the door
+                    console.log("Door opened");
                     break; // Exit the loop after opening the door
                 }
             }
+        } else if (!this.canMove) {
+            console.log("Cat cannot move");
+            return; // Exit the method if the cat cannot move
+        } else {
+            // move the cat based on the user's input
+            console.log(direction.toLowerCase());
+
+            if (direction.toLowerCase().includes("up")) {
+                cat.moveCatImage(cat.moveAmount, 0); // Move down by the set amount
+                cat.direction = 'down';
+            } else if (direction.toLowerCase().includes("down")) {
+                cat.moveCatImage(-cat.moveAmount, 0); // Move up by the set amount
+                cat.direction = 'up';
+            } else if (direction.toLowerCase().includes("left")) {
+                cat.moveCatImage(0, cat.moveAmount); // Move right by the set amount
+                cat.direction = 'right';
+            } else if (direction.toLowerCase().includes("right")) {
+                cat.moveCatImage(0, -cat.moveAmount); // Move left by the set amount
+                cat.direction = 'left';
+            }
         }
     }
+
+
 }
