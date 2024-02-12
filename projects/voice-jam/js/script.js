@@ -5,7 +5,7 @@ let voice = new p5.Speech()
 let voices; // Declare a variable to hold available voices
 
 let currentSpeech = ''; // Declare the variable to hold speech input
-let currentState = "Game"; // Initial state
+let currentState = "Title"; // Initial state
 let voiceSpeaking = false;
 
 let titleImage;
@@ -136,7 +136,7 @@ function handleSpeechInput() {
 function mousePressed() {
     if (!voiceSpeaking && currentState === "Title") {
         // Change voice to high-pitched female voice
-        voice.setVoice("Google italiano");
+        voice.setVoice("Microsoft Linda - English (Canada)");
         voice.speak(`Help Misoo find her food. Remember, cats don't like to follow human commands.\nUse the wrong direction commands to guide Misoo in the right direction.`);
         voiceSpeaking = true;
     }
