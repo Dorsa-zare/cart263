@@ -1,3 +1,4 @@
 # Template p5 project
 
-This is the README file for the entire project. For more official projects you should write information here about the nature of the project, your name, any special explanations of how the project works, etc.
+
+This is a game where, using voice commands, you can guide the cat to find her food. We will be using opposing voice commands since cats are naturally stubborn and don't like to obey their humans. So, this will add more challenge to the game.

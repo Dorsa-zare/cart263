@@ -1,3 +1,9 @@
+
+//  Dorsa Zare
+// Title of project: Help Misoo Find her food! 
+
+// This is a game where, using voice commands, you can guide the cat to find her food. We will be using opposing voice commands since cats are naturally stubborn and don't like to obey their humans. So, this will add more challenge to the game.
+
 "use strict";
 
 const speechRecognizer = new p5.SpeechRec();
